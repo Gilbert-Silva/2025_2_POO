@@ -21,7 +21,6 @@ class UI:       # interface com o usuário -  não tem instância
         #print(x.hora) # está encapsulado (começa com __)
         print(x.get_dia())
         print(x.get_hora())
-
         #x.dia = input("Informe o dia [dom, seg, ... sab]: ")
         #x.hora = int(input("Informe a hora [0-23]: "))
         x.set_dia(input("Informe o dia [dom, seg, ... sab]: "))
