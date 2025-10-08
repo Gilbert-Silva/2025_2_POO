@@ -19,14 +19,34 @@ class Cliente:
     def get_socio(self):
         return self.__socio
     def set_socio(self, socio):   # a.set_socio(b)  self -> a   socio -> b
-        self.__socio = socio
-        socio.__socio = self
+        c1 = self
+        c2 = self.__socio
+        c3 = socio
+        c4 = socio.__socio
+        if c2 != None: c2.__socio = None
+        if c4 != None: c4.__socio = None
+        #self.__socio = socio
+        #socio.__socio = self
+        c1.__socio = c3
+        c3.__socio = c1
     def __str__(self):
         if self.__socio == None:
             return f"{self.__nome} {self.__limite} {self.get_limite_sociedade()}"
         else:
             return f"{self.__nome} {self.__limite} {self.__socio.__nome} {self.get_limite_sociedade()}"
-            
+
+class Empresa:
+    def __init__(self, nome):
+        self.set_nome(nome)
+        self.__clientes = []
+    def set_nome(self, nome):
+        self.__nome = nome
+    def inserir(self, cliente):
+        self.__clientes.append(cliente)
+    def listar(self):
+        return self.__clientes
+    def __str__(self):
+        return f"{self.__nome} tem {len(self.__clientes)} cliente(s)"                        
 
 a = Cliente("Alex", 1000)
 b = Cliente("Marília", 1500)
@@ -41,8 +61,15 @@ print(c)
 print(d)
 
 a.set_socio(c)
-print(a)
-print(b)
-print(c)
-print(d)
+
+x = Empresa("IFRN")
+x.inserir(a)
+x.inserir(b)
+x.inserir(c)
+x.inserir(d)
+print(x)
+for c in x.listar(): print(c)
+
+print(x.listar())
+print(*x.listar())
 
