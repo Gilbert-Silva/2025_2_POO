@@ -13,7 +13,7 @@ class Conversor:
             n = n // 2
         bin = ""
         while len(restos) > 0:
-            bin = bin + str(restos.pop()) # pop - retira da pilha
+            bin = bin + (restos.pop()) # pop - retira da pilha
         return bin
     def binario2(self):
         bin = ""
