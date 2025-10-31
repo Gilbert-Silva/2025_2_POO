@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "nome": "Raquel",
+        "nascimento": "10/04/2000"
+    },
+    {
+        "id": 2,
+        "nome": "Miguel",
+        "nascimento": "20/04/2000"
+    },
+    {
+        "id": 3,
+        "nome": "Gilbert",
+        "nascimento": "10/10/1990"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "id_pessoa": 1,
+        "data": "31/10/2025",
+        "distancia": 5000,
+        "tempo": 1920
+    },
+    {
+        "id": 2,
+        "id_pessoa": 2,
+        "data": "31/10/2025",
+        "distancia": 5000,
+        "tempo": 2040
+    },
+    {
+        "id": 3,
+        "id_pessoa": 3,
+        "data": "31/10/2025",
+        "distancia": 5000,
+        "tempo": 4200
+    },
+    {
+        "id": 4,
+        "id_pessoa": 1,
+        "data": "30/10/2025",
+        "distancia": 42000,
+        "tempo": 7800
+    },
+    {
+        "id": 5,
+        "id_pessoa": 2,
+        "data": "30/10/2025",
+        "distancia": 100,
+        "tempo": 10
+    }
+]
