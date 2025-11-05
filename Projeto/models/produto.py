@@ -1,15 +1,24 @@
 import json
-class Cliente:
-    def __init__(self, id, nome, email, fone, senha):
-        self.id = id          # atributo de instância
-        self.nome = nome      # cada cliente (instância) tem id e nome
-        self.email = email
-        self.fone = fone
-        self.senha = senha
+class Produto:
+    def __init__(self, id, descricao, preco, estoque, id_categoria):
+        self.id = id                    
+        self.descricao = descricao  
+        self.preco = preco
+        self.estoque = estoque
+        self.id_categoria = id_categoria    
     def __str__(self):
-        return f"{self.id} - {self.nome} - {self.email} - {self.fone}"
+        return f"{self.id} - {self.descricao} - {self.preco} - {self.estoque}" 
+    def to_json(self):
+        return { "id" : self.id, "descricao" : self.descricao, \
+            "preco" : self.preco, "estoque" : self.estoque, \
+            "id_categoria" : self.id_categoria }
+    def reajustar(self, percentual):
+        self.preco * (1 + percentual)
+    @staticmethod
+    def from_json(dic):
+        return Produto(dic["id"], dic["descricao"], dic["preco"], dic["estoque"], dic["id_categoria"])
 
-class ClienteDAO:             # classe estática -> não tem instância
+class ProdutoDAO:             # classe estática -> não tem instância
     objetos = []              # atributo da classe
     @classmethod              # classe DAO não vai ter instância
     def inserir(cls, obj):
@@ -49,16 +58,16 @@ class ClienteDAO:             # classe estática -> não tem instância
             cls.salvar()
     @classmethod
     def salvar(cls):
-        with open("clientes.json", mode="w") as arquivo:
-            json.dump(cls.objetos, arquivo, default = vars, indent=4)
+        with open("produtos.json", mode="w") as arquivo:
+            json.dump(cls.objetos, arquivo, default = Produto.to_json, indent=4)
     @classmethod
     def abrir(cls):
         cls.objetos = []
         try:
-            with open("clientes.json", mode="r") as arquivo:
+            with open("produtos.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
-                    c = Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"], dic["senha"])
+                    c = Produto.from_json(dic)
                     cls.objetos.append(c)
         except:
             pass            

@@ -2,8 +2,13 @@
 #from models.categoria import Categoria, CategoriaDAO
 from views import View
 
-class UI: # classe estática -> não tem instância     
-    def menu():
+class UI: # classe estática -> não tem instância
+    __usuario = None     
+    def menu_visitante():
+        print("1-Entrar no Sistema, 2-Abrir Conta")
+        print("9 - Fim")
+        return int(input("Informe uma opção: "))           
+    def menu_admin():
         print("Clientes")
         print("1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir")
         print()
@@ -12,18 +17,37 @@ class UI: # classe estática -> não tem instância
         print()
         print("9 - Fim")
         return int(input("Informe uma opção: "))           
-    def main():
+    @classmethod
+    def main(cls):
+        View.cliente_criar_admin()
         op = 0
-        while op != 9:
-            op = UI.menu()
-            if op == 1: UI.cliente_inserir()
-            if op == 2: UI.cliente_listar()
-            if op == 3: UI.cliente_atualizar()
-            if op == 4: UI.cliente_excluir()
-            if op == 5: UI.categoria_inserir()
-            if op == 6: UI.categoria_listar()
-            if op == 7: UI.categoria_atualizar()
-            if op == 8: UI.categoria_excluir()
+        while cls.__usuario == None and op != 9:
+            op = UI.menu_visitante()
+            if op == 1: UI.visitante_entrar()
+            if op == 2: UI.visitante_criar_conta()
+        if cls.__usuario != None and cls.__usuario.email == "admin":
+            op = 0
+            while op != 9:
+                op = UI.menu_admin()
+                if op == 1: UI.cliente_inserir()
+                if op == 2: UI.cliente_listar()
+                if op == 3: UI.cliente_atualizar()
+                if op == 4: UI.cliente_excluir()
+                if op == 5: UI.categoria_inserir()
+                if op == 6: UI.categoria_listar()
+                if op == 7: UI.categoria_atualizar()
+                if op == 8: UI.categoria_excluir()
+    @classmethod
+    def visitante_entrar(cls):
+        email = input("Informe o e-mail: ")
+        senha = input("Informe a senha: ")
+        cls.__usuario = View.cliente_autenticar(email, senha)
+        if cls.__usuario == None:
+            print("Usuário ou senha inválidos")
+
+    def visitante_criar_conta():
+        pass
+
 
     def cliente_inserir():
         #id = int(input("Informe o id: "))
