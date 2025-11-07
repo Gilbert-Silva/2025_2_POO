@@ -60,6 +60,7 @@ class UI: # classe estática -> não tem instância
                 # usuário está logado, verifica se é o admin
                 admin = cls.__usuario["nome"] == "admin"
                 # mensagem de bem-vindo
+                print("IF Comércio Eletrônico 2025")
                 print("Bem-vindo(a), " + cls.__usuario["nome"])
                 # menu do usuário: admin ou cliente
                 if admin: UI.menu_admin()
