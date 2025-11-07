@@ -1,39 +1,37 @@
 import json
 
-class Produto:
-    def __init__(self, id, descricao, preco, estoque, id_categoria):
+class Venda:
+    def __init__(self, id, data, carrinho, total, id_cliente):
         self.set_id(id)          
-        self.set_descricao(descricao)      
-        self.set_preco(preco)
-        self.set_estoque(estoque)
-        self.set_id_categoria(id_categoria)
+        self.set_data(data)      
+        self.set_carrinho(carrinho)      
+        self.set_total(total)      
+        self.set_id_cliente(id_cliente)      
 
     def __str__(self):
-        return f"{self.__id} - {self.__descricao} - {self.__preco:.2f} - {self.__estoque}" 
+        return f"{self.__id} - {self.__data} - {self.__carrinho} - {self.__total}" 
 
     def get_id(self): return self.__id
-    def get_descricao(self): return self.__descricao
-    def get_preco(self): return self.__preco
-    def get_estoque(self): return self.__estoque
-    def get_id_categoria(self): return self.__id_categoria
+    def get_data(self): return self.__data
+    def get_carrinho(self): return self.__carrinho
+    def get_total(self): return self.__total
+    def get_id_cliente(self): return self.__id_cliente
 
     def set_id(self, id): self.__id = id
-    def set_descricao(self, descricao): self.__descricao = descricao
-    def set_preco(self, preco): self.__preco = preco
-    def set_estoque(self, estoque): self.__estoque = estoque
-    def set_id_categoria(self, id_categoria): self.__id_categoria = id_categoria
+    def set_data(self, data): self.__data = data
+    def set_carrinho(self, carrinho): self.__carrinho = carrinho
+    def set_total(self, total): self.__total = total
+    def set_id_cliente(self, id_cliente): self.__id_cliente = id_cliente
 
     def to_json(self):
-        return { "id" : self.__id, "descricao" : self.__descricao, "preco" : self.__preco, "estoque" : self.__estoque, "id_categoria" : self.__id_categoria } 
+        return { "id" : self.__id, "data" : self.__data, "carrinho" : self.__carrinho, "total" : self.__total, "id_cliente" : self.__id_cliente }
 
     @staticmethod
     def from_json(dic):
-        return Produto(dic["id"], dic["descricao"], dic["preco"], dic["estoque"], dic["id_categoria"])
-
-    def reajustar(self, percentual): self.__preco * (1 + percentual)
+        return Venda(dic["id"], dic["data"], dic["carrinho"], dic["total"], dic["id_cliente"])
 
 
-class ProdutoDAO:             # classe estática -> não tem instância
+class VendaDAO:               # classe estática -> não tem instância
     objetos = []              # atributo da classe
     @classmethod              # classe DAO não vai ter instância
     def inserir(cls, obj):
@@ -72,16 +70,16 @@ class ProdutoDAO:             # classe estática -> não tem instância
             cls.salvar()
     @classmethod
     def salvar(cls):
-        with open("produtos.json", mode="w") as arquivo:
-            json.dump(cls.objetos, arquivo, default = Produto.to_json, indent=4)
+        with open("vendas.json", mode="w") as arquivo:
+            json.dump(cls.objetos, arquivo, default = Venda.to_json, indent=4)
     @classmethod
     def abrir(cls):
         cls.objetos = []
         try:
-            with open("produtos.json", mode="r") as arquivo:
+            with open("vendas.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
-                    c = Produto.from_json(dic)
+                    c = Venda.from_json(dic)
                     cls.objetos.append(c)
         except:
             pass            

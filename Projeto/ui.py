@@ -4,39 +4,67 @@ from views import View
 
 class UI: # classe estática -> não tem instância
     __usuario = None     
+
     def menu_visitante():
-        print("1-Entrar no Sistema, 2-Abrir Conta")
-        print("9 - Fim")
-        return int(input("Informe uma opção: "))           
+        print("1-Entrar no Sistema, 2-Abrir Conta, 9-Fim")
+        op = int(input("Informe uma opção: "))           
+        if op == 1: UI.visitante_entrar()
+        if op == 2: UI.visitante_criar_conta()
+        return op
+
     def menu_admin():
-        print("Clientes")
-        print("1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir")
-        print()
-        print("Categorias")
-        print("5-Inserir, 6-Listar, 7-Atualizar, 8-Excluir")
-        print()
-        print("9 - Fim")
-        return int(input("Informe uma opção: "))           
+        print("Clientes   : 1-Inserir, 2-Listar, 3-Atualizar, 4-Excluir")
+        print("Categorias : 5-Inserir, 6-Listar, 7-Atualizar, 8-Excluir")
+        print("9-Sair")
+        op = int(input("Informe uma opção: "))           
+        if op == 1: UI.cliente_inserir()
+        if op == 2: UI.cliente_listar()
+        if op == 3: UI.cliente_atualizar()
+        if op == 4: UI.cliente_excluir()
+        if op == 5: UI.categoria_inserir()
+        if op == 6: UI.categoria_listar()
+        if op == 7: UI.categoria_atualizar()
+        if op == 8: UI.categoria_excluir()
+        if op == 9: UI.usuario_sair()
+
+    def menu_cliente():
+        print("1-Listar produtos")
+        print("2-Inserir produto no carrinho")
+        print("3-Visualizar carrinho")
+        print("4-Comprar carrinho")
+        print("5-Listar minhas compras")
+        print("9-Sair")
+        op = int(input("Informe uma opção: "))           
+        if op == 1: pass
+        if op == 2: pass
+        if op == 3: pass
+        if op == 4: pass
+        if op == 5: pass
+        if op == 9: UI.usuario_sair()
+
     @classmethod
     def main(cls):
+        # verifica a existe o usuário admin
         View.cliente_criar_admin()
+        # mostra o menu da aplicação
+        UI.mostrar_menu()
+        
+    @classmethod
+    def mostrar_menu(cls):
         op = 0
-        while cls.__usuario == None and op != 9:
-            op = UI.menu_visitante()
-            if op == 1: UI.visitante_entrar()
-            if op == 2: UI.visitante_criar_conta()
-        if cls.__usuario != None and cls.__usuario.email == "admin":
-            op = 0
-            while op != 9:
-                op = UI.menu_admin()
-                if op == 1: UI.cliente_inserir()
-                if op == 2: UI.cliente_listar()
-                if op == 3: UI.cliente_atualizar()
-                if op == 4: UI.cliente_excluir()
-                if op == 5: UI.categoria_inserir()
-                if op == 6: UI.categoria_listar()
-                if op == 7: UI.categoria_atualizar()
-                if op == 8: UI.categoria_excluir()
+        while op != 9:
+            if cls.__usuario == None: 
+                # usuário não está logado
+                op = UI.menu_visitante()
+            else:
+                # usuário está logado, verifica se é o admin
+                admin = cls.__usuario.get_email() == "admin"
+                # mensagem de bem-vindo
+                print("Bem-vindo(a), " + cls.__usuario.get_nome())
+                # menu do usuário: admin ou cliente
+                if admin: UI.menu_admin()
+                else: UI.menu_cliente()
+
     @classmethod
     def visitante_entrar(cls):
         email = input("Informe o e-mail: ")
@@ -46,59 +74,52 @@ class UI: # classe estática -> não tem instância
             print("Usuário ou senha inválidos")
 
     def visitante_criar_conta():
-        pass
+        UI.cliente_inserir()
 
+    @classmethod
+    def usuario_sair(cls):
+        cls.__usuario = None
 
     def cliente_inserir():
-        #id = int(input("Informe o id: "))
-        #id = 0
         nome = input("Informe o nome: ")
-        #c = Cliente(id, nome)
-        #ClienteDAO.inserir(c)
-        View.cliente_inserir(nome)
+        email = input("Informe o e-mail: ")
+        fone = input("Informe o fone: ")
+        senha = input("Informe a senha: ")
+        View.cliente_inserir(nome, email, fone, senha)
 
     def cliente_listar():
-        #for obj in ClienteDAO.listar(): print(obj)       
         for obj in View.cliente_listar(): print(obj)       
 
     def cliente_atualizar():
         UI.cliente_listar()
         id = int(input("Informe o id a ser atualizado: "))
         nome = input("Informe o novo nome: ")
-        #c = Cliente(id, nome)
-        #ClienteDAO.atualizar(c)
-        View.cliente_atualizar(id, nome)
+        email = input("Informe o novo e-mail: ")
+        fone = input("Informe o novo fone: ")
+        senha = input("Informe a nova senha: ")
+        View.cliente_atualizar(id, nome, email, fone, senha)
 
     def cliente_excluir():
         UI.cliente_listar()
         id = int(input("Informe o id a ser excluído: "))
-        #nome = ""
-        #c = Cliente(id, nome)
-        #ClienteDAO.excluir(c)
         View.cliente_excluir(id)
 
     def categoria_inserir():
-        #id = 0
         descricao = input("Informe a descrição: ")
-        #c = Categoria(id, descricao)
-        #CategoriaDAO.inserir(c)
         View.categoria_inserir(descricao)
+
     def categoria_listar():
-        #for obj in CategoriaDAO.listar(): print(obj) 
         for obj in View.categoria_listar(): print(obj)      
+
     def categoria_atualizar():
         UI.categoria_listar()
         id = int(input("Informe o id a ser atualizado: "))
         descricao = input("Informe a nova descrição: ")
-        #c = Categoria(id, descricao)
-        #CategoriaDAO.atualizar(c)
         View.categoria_atualizar(id, descricao)
+
     def categoria_excluir():
         UI.categoria_listar()
         id = int(input("Informe o id a ser excluído: "))
-        #descricao = ""
-        #c = Categoria(id, descricao)
-        #CategoriaDAO.excluir(c)
         View.categoria_excluir(id)
 
 UI.main()

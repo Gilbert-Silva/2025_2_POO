@@ -3,17 +3,23 @@ from models.categoria import Categoria, CategoriaDAO
 from models.produto import Produto, ProdutoDAO
 
 class View:
+
     def cliente_criar_admin():
         for obj in View.cliente_listar():
-            if obj.email == "admin": return
+            if obj.get_email() == "admin": return
         View.cliente_inserir("admin", "admin", "1234", "1234") 
+
     def cliente_autenticar(email, senha):
+        print(email, senha)
         for obj in View.cliente_listar():
-            if obj.email == email and obj.senha == senha: return obj
+            print(obj.get_email(), obj.get_senha())
+            if obj.get_email() == email and obj.get_senha() == senha: 
+                print(obj)
+                return obj
         return None
+
     def cliente_inserir(nome, email, fone, senha):
-        id = 0
-        c = Cliente(id, nome, email, fone, senha)
+        c = Cliente(0, nome, email, fone, senha)
         ClienteDAO.inserir(c)
     def cliente_listar():
         return ClienteDAO.listar()
@@ -27,8 +33,7 @@ class View:
         ClienteDAO.excluir(c)
 
     def categoria_inserir(descricao):
-        id = 0
-        c = Categoria(id, descricao)
+        c = Categoria(0, descricao)
         CategoriaDAO.inserir(c)
     def categoria_listar():
         return CategoriaDAO.listar()
@@ -38,13 +43,11 @@ class View:
         c = Categoria(id, descricao)
         CategoriaDAO.atualizar(c)
     def categoria_excluir(id):
-        descricao = ""
-        c = Categoria(id, descricao)
+        c = Categoria(id, "")
         CategoriaDAO.excluir(c)
 
     def produto_inserir(descricao, preco, estoque, id_categoria):
-        id = 0
-        c = Produto(id, descricao, preco, estoque, id_categoria)
+        c = Produto(0, descricao, preco, estoque, id_categoria)
         ProdutoDAO.inserir(c)
     def produto_listar():
         return ProdutoDAO.listar()
