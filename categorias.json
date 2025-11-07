@@ -2,5 +2,9 @@
     {
         "id": 1,
         "descricao": "Teclado"
+    },
+    {
+        "id": 2,
+        "descricao": "Mouse"
     }
 ]

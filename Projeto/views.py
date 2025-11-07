@@ -10,12 +10,9 @@ class View:
         View.cliente_inserir("admin", "admin", "1234", "1234") 
 
     def cliente_autenticar(email, senha):
-        print(email, senha)
         for obj in View.cliente_listar():
-            print(obj.get_email(), obj.get_senha())
             if obj.get_email() == email and obj.get_senha() == senha: 
-                print(obj)
-                return obj
+                return { "id": obj.get_id(), "nome": obj.get_nome() }
         return None
 
     def cliente_inserir(nome, email, fone, senha):

@@ -58,9 +58,9 @@ class UI: # classe estática -> não tem instância
                 op = UI.menu_visitante()
             else:
                 # usuário está logado, verifica se é o admin
-                admin = cls.__usuario.get_email() == "admin"
+                admin = cls.__usuario["nome"] == "admin"
                 # mensagem de bem-vindo
-                print("Bem-vindo(a), " + cls.__usuario.get_nome())
+                print("Bem-vindo(a), " + cls.__usuario["nome"])
                 # menu do usuário: admin ou cliente
                 if admin: UI.menu_admin()
                 else: UI.menu_cliente()
@@ -70,8 +70,7 @@ class UI: # classe estática -> não tem instância
         email = input("Informe o e-mail: ")
         senha = input("Informe a senha: ")
         cls.__usuario = View.cliente_autenticar(email, senha)
-        if cls.__usuario == None:
-            print("Usuário ou senha inválidos")
+        if cls.__usuario == None: print("Usuário ou senha inválidos")
 
     def visitante_criar_conta():
         UI.cliente_inserir()
