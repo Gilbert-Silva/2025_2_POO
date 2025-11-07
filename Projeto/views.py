@@ -5,6 +5,7 @@ from models.produto import Produto, ProdutoDAO
 class View:
 
     def cliente_criar_admin():
+        # cria o usuário admin se ele não existir
         for obj in View.cliente_listar():
             if obj.get_email() == "admin": return
         View.cliente_inserir("admin", "admin", "1234", "1234") 
