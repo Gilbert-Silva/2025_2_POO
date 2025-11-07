@@ -47,10 +47,10 @@ class UI: # classe estática -> não tem instância
         # verifica a existe o usuário admin
         View.cliente_criar_admin()
         # mostra o menu da aplicação
-        UI.mostrar_menu()
+        UI.menu()
         
     @classmethod
-    def mostrar_menu(cls):
+    def menu(cls):
         op = 0
         while op != 9:
             if cls.__usuario == None: 
