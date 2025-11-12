@@ -86,6 +86,8 @@ class UI: # classe estática -> não tem instância
         fone = input("Informe o fone: ")
         senha = input("Informe a senha: ")
         View.cliente_inserir(nome, email, fone, senha)
+        #c = Cliente(id, nome, email, fone, senha)
+        #View.cliente_inserir(c)
 
     def cliente_listar():
         for obj in View.cliente_listar(): print(obj)       
