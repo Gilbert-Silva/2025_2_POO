@@ -1,4 +1,5 @@
-from models.cliente import Cliente, ClienteDAO
+from models.cliente import Cliente
+from models.clienteDAO_json import ClienteDAO
 from models.categoria import Categoria, CategoriaDAO
 from models.produto import Produto, ProdutoDAO
 
@@ -18,17 +19,17 @@ class View:
 
     def cliente_inserir(nome, email, fone, senha):
         c = Cliente(0, nome, email, fone, senha)
-        ClienteDAO.inserir(c)
+        ClienteDAO().inserir(c)
     def cliente_listar():
-        return ClienteDAO.listar()
+        return ClienteDAO().listar()
     def cliente_listar_id(id):
-        return ClienteDAO.listar_id(id)
+        return ClienteDAO().listar_id(id)
     def cliente_atualizar(id, nome, email, fone, senha):
         c = Cliente(id, nome, email, fone, senha)
-        ClienteDAO.atualizar(c)
+        ClienteDAO().atualizar(c)
     def cliente_excluir(id):
         c = Cliente(id, "", "", "", "")
-        ClienteDAO.excluir(c)
+        ClienteDAO().excluir(c)
 
     def categoria_inserir(descricao):
         c = Categoria(0, descricao)
