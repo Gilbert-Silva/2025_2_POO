@@ -1,5 +1,6 @@
 from models.cliente import Cliente
 from models.clienteDAO_json import ClienteDAO
+#from models.clienteDAO_sql import ClienteDAO
 from models.categoria import Categoria, CategoriaDAO
 from models.produto import Produto, ProdutoDAO
 
