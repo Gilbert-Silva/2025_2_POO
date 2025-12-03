@@ -19,6 +19,10 @@ class View:
         return None
 
     def cliente_inserir(nome, email, fone, senha):
+        # verificar se já existe alguém com esse email
+        for obj in View.cliente_listar():
+            if obj.get_email() == email: 
+                raise ValueError("E-mail repetido")
         c = Cliente(0, nome, email, fone, senha)
         ClienteDAO().inserir(c)
     def cliente_listar():
